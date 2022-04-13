@@ -3,23 +3,38 @@ from datacenter.models import *
 
 
 def fix_marks(schoolkid):
-	marks=Mark.objects.filter(schoolkid=schoolkid, points__in=[2,3])
-	for mark in marks:
-		mark.points = 5
-		mark.save()
+	try:
+		marks=Mark.objects.filter(schoolkid=schoolkid, points__in=[2,3])
+		for mark in marks:
+			mark.points = 5
+			mark.save()
+    except ObjectDoesNotExist:
+        print('Ученик не найден.')
+    except MultipleObjectsReturned:
+        print('Найдено более одного ученика, попробуйте уточнить запрос.')
 
 
 def create_commendation(praise, name_schoolkid, name_teacher, lesson):
-	Commendation.objects.create(teacher=Teacher.objects.get(full_name__contains=name_teacher),
+	try:
+		Commendation.objects.create(teacher=Teacher.objects.get(full_name__contains=name_teacher),
 								subject=lesson.subject, schoolkid=Schoolkid.objects.get(full_name__contains=name_schoolkid),
 								created=lesson.date,
 								text=praise)
+    except ObjectDoesNotExist:
+        print('Ученик или учитель не найден.')
+    except MultipleObjectsReturned:
+        print('Найдено более одного ученика или учителя, попробуйте уточнить запрос.')
 
 
 def delete_prise(name_schoolkid):
-    comment = Chastisement.objects.filter(schoolkid=Schoolkid.objects.get(full_name__contains=name_schoolkid))
-    comment.delete()
-
+	try:
+	    comment = Chastisement.objects.filter(schoolkid=Schoolkid.objects.get(full_name__contains=name_schoolkid))
+    	comment.delete()
+    except ObjectDoesNotExist:
+        print('Ученик не найден.')
+    except MultipleObjectsReturned:
+        print('Найдено более одного ученика, попробуйте уточнить запрос.')
+    	
 
 def main():
 	teacher_praise=['Молодец!',

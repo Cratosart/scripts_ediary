@@ -4,7 +4,7 @@ from datacenter.models import *
 
 def fix_marks(schoolkid):
 	try:
-		marks=Mark.objects.filter(schoolkid=schoolkid, points__in=[2,3])
+		marks = Mark.objects.filter(schoolkid=schoolkid, points__in=[2, 3])
 		for mark in marks:
 			mark.points = 5
 			mark.save()

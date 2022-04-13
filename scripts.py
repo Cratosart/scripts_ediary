@@ -8,10 +8,10 @@ def fix_marks(schoolkid):
 		for mark in marks:
 			mark.points = 5
 			mark.save()
-    except ObjectDoesNotExist:
-        print('Ученик не найден.')
-    except MultipleObjectsReturned:
-        print('Найдено более одного ученика, попробуйте уточнить запрос.')
+	except ObjectDoesNotExist:
+		print('Ученик не найден.')
+	except MultipleObjectsReturned:
+		print('Найдено более одного ученика, попробуйте уточнить запрос.')
 
 
 def create_commendation(praise, name_schoolkid, name_teacher, lesson):
@@ -20,21 +20,21 @@ def create_commendation(praise, name_schoolkid, name_teacher, lesson):
 								subject=lesson.subject, schoolkid=Schoolkid.objects.get(full_name__contains=name_schoolkid),
 								created=lesson.date,
 								text=praise)
-    except ObjectDoesNotExist:
-        print('Ученик или учитель не найден.')
-    except MultipleObjectsReturned:
-        print('Найдено более одного ученика или учителя, попробуйте уточнить запрос.')
+	except ObjectDoesNotExist:
+		print('Ученик или учитель не найден.')
+	except MultipleObjectsReturned:
+		print('Найдено более одного ученика или учителя, попробуйте уточнить запрос.')
 
 
 def delete_prise(name_schoolkid):
 	try:
-	    comment = Chastisement.objects.filter(schoolkid=Schoolkid.objects.get(full_name__contains=name_schoolkid))
-    	comment.delete()
-    except ObjectDoesNotExist:
-        print('Ученик не найден.')
-    except MultipleObjectsReturned:
-        print('Найдено более одного ученика, попробуйте уточнить запрос.')
-    	
+		comment = Chastisement.objects.filter(schoolkid=Schoolkid.objects.get(full_name__contains=name_schoolkid))
+		comment.delete()
+	except ObjectDoesNotExist:
+		print('Ученик не найден.')
+	except MultipleObjectsReturned:
+		print('Найдено более одного ученика, попробуйте уточнить запрос.')
+
 
 def main():
 	teacher_praise=['Молодец!',
@@ -81,10 +81,10 @@ def main():
 		praise=random.choice(teacher_praise)
 		create_commendation(praise, name_schoolkid, name_teacher, lesson)
     except ObjectDoesNotExist:
-        print('Ученик не найден.')
-    except MultipleObjectsReturned:
-        print('Найдено более одного ученика, попробуйте уточнить запрос.')
+		print('Ученик не найден.')
+	except MultipleObjectsReturned:
+		print('Найдено более одного ученика, попробуйте уточнить запрос.')
 
 if __name__ == '__main__':
-    main()
+	main()
 

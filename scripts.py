@@ -1,5 +1,11 @@
 import random
-from datacenter.models import *
+
+from datacenter.models import Teacher
+from datacenter.models import Schoolkid
+from datacenter.models import Commendation
+from datacenter.models import Chastisement
+from datacenter.models import Mark
+from datacenter.models import Lesson
 
 
 def fix_marks(schoolkid):
@@ -16,8 +22,10 @@ def fix_marks(schoolkid):
 
 def create_commendation(praise, name_schoolkid, name_teacher, lesson):
 	try:
-		Commendation.objects.create(teacher=Teacher.objects.get(full_name__contains=name_teacher),
-								subject=lesson.subject, schoolkid=Schoolkid.objects.get(full_name__contains=name_schoolkid),
+		teacher = Teacher.objects.get(full_name__contains=name_teacher)
+		schoolkid = Schoolkid.objects.get(full_name__contains=name_schoolkid)
+		Commendation.objects.create(teacher=teacher,
+								subject=lesson.subject, schoolkid=schoolkid,
 								created=lesson.date,
 								text=praise)
 	except ObjectDoesNotExist:
@@ -28,7 +36,8 @@ def create_commendation(praise, name_schoolkid, name_teacher, lesson):
 
 def delete_prise(name_schoolkid):
 	try:
-		comment = Chastisement.objects.filter(schoolkid=Schoolkid.objects.get(full_name__contains=name_schoolkid))
+		schoolkid = Schoolkid.objects.get(full_name__contains=name_schoolkid)
+		comment = Chastisement.objects.filter(schoolkid = schoolkid)
 		comment.delete()
 	except ObjectDoesNotExist:
 		print('Ученик не найден.')

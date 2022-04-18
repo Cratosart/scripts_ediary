@@ -25,9 +25,9 @@ def create_commendation(praise, name_schoolkid, name_teacher, lesson):
 		teacher = Teacher.objects.get(full_name__contains=name_teacher)
 		schoolkid = Schoolkid.objects.get(full_name__contains=name_schoolkid)
 		Commendation.objects.create(teacher=teacher,
-								subject=lesson.subject, schoolkid=schoolkid,
-								created=lesson.date,
-								text=praise)
+		subject=lesson.subject, schoolkid=schoolkid,
+		created=lesson.date,
+		text=praise)
 	except ObjectDoesNotExist:
 		print('Ученик или учитель не найден.')
 	except MultipleObjectsReturned:
@@ -89,7 +89,7 @@ def main():
 		delete_prise(name_schoolkid)
 		praise=random.choice(teacher_praise)
 		create_commendation(praise, name_schoolkid, name_teacher, lesson)
-    except ObjectDoesNotExist:
+	except ObjectDoesNotExist:
 		print('Ученик не найден.')
 	except MultipleObjectsReturned:
 		print('Найдено более одного ученика, попробуйте уточнить запрос.')
